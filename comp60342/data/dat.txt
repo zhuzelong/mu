@@ -1,0 +1,3 @@
+4 32.0 black wood
+7 11.0 purple plastic
+8 20.0 blue cotton

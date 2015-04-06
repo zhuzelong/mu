@@ -1,0 +1,118 @@
+Best feasible solution found: 4040.0 2624.0
+['1', '3', '5', '7', '8', '9', '10', '11', '12', '13', '15', '16', '17', '19', '20', '21', '24', '25', '26', '27', '28', '31', '32', '33', '34', '35', '36', '37', '38', '41', '43', '45', '47', '48', '50', '51', '52', '53', '54', '55', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '70', '75', '76', '77', '78', '80', '83', '86', '91', '93', '95', '98', '99', '100', '102', '105', '106', '108', '111', '112', '113', '115', '116', '118', '120', '121', '122', '125', '126', '127', '128', '130', '131', '132', '133', '134', '135', '136', '137', '138', '140', '142', '144', '146', '149', '150', '152', '153', '156', '157', '160', '162', '163', '164', '165', '166', '170', '173', '174', '175', '177', '178', '180', '184', '187', '188', '190', '191', '193', '194', '198', '199', '200']
+         43252 function calls in 0.050 seconds
+
+   Ordered by: standard name
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.001    0.001    0.004    0.004 Queue.py:1(<module>)
+      336    0.001    0.000    0.002    0.000 Queue.py:107(put)
+        1    0.000    0.000    0.000    0.000 Queue.py:13(Empty)
+      191    0.000    0.000    0.001    0.000 Queue.py:150(get)
+        1    0.000    0.000    0.000    0.000 Queue.py:17(Full)
+        1    0.000    0.000    0.000    0.000 Queue.py:21(Queue)
+        1    0.000    0.000    0.000    0.000 Queue.py:212(PriorityQueue)
+        1    0.000    0.000    0.000    0.000 Queue.py:218(_init)
+      383    0.000    0.000    0.000    0.000 Queue.py:221(_qsize)
+      336    0.000    0.000    0.000    0.000 Queue.py:224(_put)
+      191    0.000    0.000    0.000    0.000 Queue.py:227(_get)
+        1    0.000    0.000    0.000    0.000 Queue.py:231(LifoQueue)
+        1    0.000    0.000    0.000    0.000 Queue.py:26(__init__)
+      192    0.000    0.000    0.000    0.000 Queue.py:93(empty)
+        1    0.002    0.002    0.045    0.045 bnbsack.py:106(bnb)
+      200    0.000    0.000    0.000    0.000 bnbsack.py:115(<lambda>)
+      336    0.021    0.000    0.026    0.000 bnbsack.py:12(fractional_bound)
+      124    0.000    0.000    0.000    0.000 bnbsack.py:167(<lambda>)
+        1    0.001    0.001    0.050    0.050 bnbsack.py:5(<module>)
+      335    0.007    0.000    0.007    0.000 bnbsack.py:61(feasible)
+      144    0.006    0.000    0.009    0.000 bnbsack.py:85(summary)
+        1    0.001    0.001    0.001    0.001 collections.py:1(<module>)
+        1    0.000    0.000    0.000    0.000 collections.py:26(OrderedDict)
+        1    0.000    0.000    0.000    0.000 collections.py:390(Counter)
+        1    0.001    0.001    0.001    0.001 heapq.py:31(<module>)
+        1    0.000    0.000    0.000    0.000 keyword.py:11(<module>)
+        2    0.000    0.000    0.000    0.000 re.py:192(compile)
+        2    0.000    0.000    0.000    0.000 re.py:230(_compile)
+        2    0.000    0.000    0.000    0.000 readsack.py:12(__init__)
+      672    0.000    0.000    0.000    0.000 readsack.py:20(get_capacity)
+        1    0.000    0.000    0.000    0.000 readsack.py:23(set_capacity)
+        2    0.000    0.000    0.000    0.000 readsack.py:26(get_num)
+        1    0.000    0.000    0.000    0.000 readsack.py:29(set_num)
+      816    0.000    0.000    0.000    0.000 readsack.py:32(pour)
+      200    0.000    0.000    0.000    0.000 readsack.py:35(push)
+        1    0.000    0.000    0.000    0.000 readsack.py:39(Item)
+        1    0.000    0.000    0.000    0.000 readsack.py:4(<module>)
+      201    0.000    0.000    0.000    0.000 readsack.py:42(__init__)
+        1    0.000    0.000    0.001    0.001 readsack.py:48(readsack)
+        1    0.000    0.000    0.000    0.000 readsack.py:9(Sack)
+        2    0.000    0.000    0.000    0.000 sre_compile.py:433(_compile_info)
+        4    0.000    0.000    0.000    0.000 sre_compile.py:546(isstring)
+        2    0.000    0.000    0.000    0.000 sre_compile.py:552(_code)
+        2    0.000    0.000    0.000    0.000 sre_compile.py:567(compile)
+        2    0.000    0.000    0.000    0.000 sre_compile.py:64(_compile)
+       22    0.000    0.000    0.000    0.000 sre_parse.py:147(append)
+        2    0.000    0.000    0.000    0.000 sre_parse.py:149(getwidth)
+        2    0.000    0.000    0.000    0.000 sre_parse.py:187(__init__)
+       28    0.000    0.000    0.000    0.000 sre_parse.py:191(__next)
+        2    0.000    0.000    0.000    0.000 sre_parse.py:204(match)
+       26    0.000    0.000    0.000    0.000 sre_parse.py:210(get)
+        2    0.000    0.000    0.000    0.000 sre_parse.py:310(_parse_sub)
+        2    0.000    0.000    0.000    0.000 sre_parse.py:388(_parse)
+        2    0.000    0.000    0.000    0.000 sre_parse.py:67(__init__)
+        2    0.000    0.000    0.000    0.000 sre_parse.py:686(parse)
+        2    0.000    0.000    0.000    0.000 sre_parse.py:90(__init__)
+        1    0.001    0.001    0.002    0.002 threading.py:1(<module>)
+        1    0.000    0.000    0.000    0.000 threading.py:1058(_Timer)
+        1    0.000    0.000    0.000    0.000 threading.py:1088(_MainThread)
+        1    0.000    0.000    0.000    0.000 threading.py:1090(__init__)
+        1    0.000    0.000    0.000    0.000 threading.py:1097(_set_daemon)
+        1    0.000    0.000    0.000    0.000 threading.py:1128(_DummyThread)
+        1    0.000    0.000    0.000    0.000 threading.py:125(_RLock)
+        5    0.000    0.000    0.000    0.000 threading.py:242(Condition)
+        1    0.000    0.000    0.000    0.000 threading.py:255(_Condition)
+        5    0.000    0.000    0.000    0.000 threading.py:260(__init__)
+      528    0.000    0.000    0.000    0.000 threading.py:300(_is_owned)
+      528    0.001    0.000    0.001    0.000 threading.py:373(notify)
+        1    0.000    0.000    0.000    0.000 threading.py:400(notifyAll)
+        1    0.000    0.000    0.000    0.000 threading.py:423(_Semaphore)
+        1    0.000    0.000    0.000    0.000 threading.py:515(_BoundedSemaphore)
+        1    0.000    0.000    0.000    0.000 threading.py:542(Event)
+        1    0.000    0.000    0.000    0.000 threading.py:552(_Event)
+        1    0.000    0.000    0.000    0.000 threading.py:561(__init__)
+        1    0.000    0.000    0.000    0.000 threading.py:57(_Verbose)
+        1    0.000    0.000    0.000    0.000 threading.py:576(set)
+        7    0.000    0.000    0.000    0.000 threading.py:59(__init__)
+      528    0.000    0.000    0.000    0.000 threading.py:64(_note)
+        1    0.000    0.000    0.000    0.000 threading.py:640(Thread)
+        1    0.000    0.000    0.000    0.000 threading.py:656(__init__)
+        1    0.000    0.000    0.000    0.000 threading.py:789(_set_ident)
+        1    0.000    0.000    0.000    0.000 warnings.py:46(filterwarnings)
+      191    0.000    0.000    0.000    0.000 {_heapq.heappop}
+      336    0.000    0.000    0.000    0.000 {_heapq.heappush}
+        2    0.000    0.000    0.000    0.000 {_sre.compile}
+       12    0.000    0.000    0.000    0.000 {_sre.getlower}
+       10    0.000    0.000    0.000    0.000 {isinstance}
+        1    0.000    0.000    0.000    0.000 {issubclass}
+    16700    0.001    0.000    0.001    0.000 {len}
+     1248    0.000    0.000    0.000    0.000 {method 'acquire' of 'thread.lock' objects}
+      414    0.000    0.000    0.000    0.000 {method 'append' of 'list' objects}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+        2    0.000    0.000    0.000    0.000 {method 'extend' of 'list' objects}
+      718    0.002    0.000    0.002    0.000 {method 'index' of 'list' objects}
+        1    0.000    0.000    0.000    0.000 {method 'insert' of 'list' objects}
+        2    0.000    0.000    0.000    0.000 {method 'items' of 'dict' objects}
+    15908    0.002    0.000    0.002    0.000 {method 'pop' of 'list' objects}
+        1    0.000    0.000    0.000    0.000 {method 'readline' of 'file' objects}
+      720    0.000    0.000    0.000    0.000 {method 'release' of 'thread.lock' objects}
+      336    0.000    0.000    0.000    0.000 {method 'reverse' of 'list' objects}
+        1    0.000    0.000    0.000    0.000 {method 'rstrip' of 'str' objects}
+        2    0.000    0.000    0.000    0.000 {method 'setter' of 'property' objects}
+        2    0.000    0.000    0.000    0.000 {method 'sort' of 'list' objects}
+      201    0.000    0.000    0.000    0.000 {method 'split' of 'str' objects}
+        4    0.000    0.000    0.000    0.000 {min}
+        1    0.000    0.000    0.000    0.000 {open}
+       21    0.000    0.000    0.000    0.000 {ord}
+        4    0.000    0.000    0.000    0.000 {thread.allocate_lock}
+        2    0.000    0.000    0.000    0.000 {thread.get_ident}
+
+
