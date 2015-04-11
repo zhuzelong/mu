@@ -48,9 +48,9 @@ def readsack(problem):
 
     sack = Sack()
 
-    with open(problem, 'r') as fh:
-        sack.set_num(int(fh.readline().rstrip()))
-        for line in fh:
+    with open(problem, 'r') as reader:
+        sack.set_num(int(reader.readline().rstrip()))
+        for line in reader:
             try:
                 attributes = line.split()
                 sack.push(Item(*attributes))
