@@ -1,0 +1,202 @@
+Current... [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None]
+Depth... 0
+Bound... 439.333333333
+Best... 0
+----------
+Current... [1, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None]
+Depth... 1
+Bound... 439.333333333
+Best... 47
+----------
+Current... [1, 1, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None]
+Depth... 2
+Bound... 439.333333333
+Best... 91
+----------
+Current... [1, 1, 1, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None]
+Depth... 3
+Bound... 439.333333333
+Best... 117
+----------
+Current... [1, 1, 1, 1, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None]
+Depth... 4
+Bound... 439.333333333
+Best... 157
+----------
+Current... [1, 1, 1, 1, 1, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None]
+Depth... 5
+Bound... 439.333333333
+Best... 199
+----------
+Current... [1, 1, 1, 1, 1, 1, None, None, None, None, None, None, None, None, None, None, None, None, None, None]
+Depth... 6
+Bound... 439.333333333
+Best... 226
+----------
+Current... [1, 1, 1, 1, 1, 1, 1, None, None, None, None, None, None, None, None, None, None, None, None, None]
+Depth... 7
+Bound... 439.333333333
+Best... 264
+----------
+Current... [1, 1, 1, 1, 1, 1, 1, 1, None, None, None, None, None, None, None, None, None, None, None, None]
+Depth... 8
+Bound... 439.333333333
+Best... 278
+----------
+Current... [1, 1, 1, 1, 1, 1, 1, 1, 1, None, None, None, None, None, None, None, None, None, None, None]
+Depth... 9
+Bound... 439.333333333
+Best... 304
+----------
+Current... [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, None, None, None, None, None, None, None, None, None, None]
+Depth... 10
+Bound... 439.333333333
+Best... 344
+----------
+Current... [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, None, None, None, None, None, None, None, None, None]
+Depth... 11
+Bound... 439.333333333
+Best... 391
+----------
+Current... [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, None, None, None, None, None, None, None, None]
+Depth... 12
+Bound... 439.333333333
+Best... 420
+----------
+---------- Right child infeasible ---------- 
+
+---------- Jump ----------
+Current... [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, None, None, None, None, None, None, None]
+Depth... 13
+Bound... 431.488372093
+Best... 420
+----------
+---------- Right child infeasible ---------- 
+
+---------- Jump ----------
+Current... [1, 1, 1, 1, 1, 1, 1, 0, None, None, None, None, None, None, None, None, None, None, None, None]
+Depth... 8
+Bound... 431.282051282
+Best... 420
+----------
+Current... [1, 1, 1, 1, 1, 1, 1, 0, 1, None, None, None, None, None, None, None, None, None, None, None]
+Depth... 9
+Bound... 431.282051282
+Best... 420
+----------
+Current... [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, None, None, None, None, None, None, None, None, None, None]
+Depth... 10
+Bound... 431.282051282
+Best... 420
+----------
+Current... [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, None, None, None, None, None, None, None, None, None]
+Depth... 11
+Bound... 431.282051282
+Best... 420
+----------
+Current... [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, None, None, None, None, None, None, None, None]
+Depth... 12
+Bound... 431.282051282
+Best... 420
+----------
+---------- Right child infeasible ---------- 
+
+---------- Jump ----------
+Current... [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, None, None, None, None, None, None]
+Depth... 14
+Bound... 431.166666667
+Best... 420
+----------
+Current... [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, None, None, None, None, None]
+Depth... 15
+Bound... 431.166666667
+Best... 427
+----------
+---------- Right child infeasible ---------- 
+
+---------- Jump ----------
+Current... [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, None, None, None, None, None]
+Depth... 15
+Bound... 430.7
+Best... 427
+----------
+Current... [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, None, None, None, None]
+Depth... 16
+Bound... 430.7
+Best... 430
+----------
+---------- Right child infeasible ---------- 
+
+---------- Jump ----------
+Current... [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, None, None, None, None, None, None, None, None]
+Depth... 12
+Bound... 430.604651163
+Best... 430
+----------
+Current... [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, None, None, None, None, None, None, None]
+Depth... 13
+Bound... 430.604651163
+Best... 430
+----------
+---------- Right child infeasible ---------- 
+
+---------- Jump ----------
+Current... [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, None, None, None]
+Depth... 17
+Bound... 430.555555556
+Best... 430
+----------
+---------- Right child infeasible ---------- 
+
+---------- Jump ----------
+Current... [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, None, None, None, None]
+Depth... 16
+Bound... 430.5
+Best... 430
+----------
+---------- Right child infeasible ---------- 
+
+---------- Jump ----------
+Current... [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, None, None, None, None, None, None]
+Depth... 14
+Bound... 430.333333333
+Best... 430
+----------
+Current... [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, None, None, None, None, None]
+Depth... 15
+Bound... 430.333333333
+Best... 430
+----------
+---------- Right child infeasible ---------- 
+
+---------- Jump ----------
+Current... [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, None, None]
+Depth... 18
+Bound... 430.242424242
+Best... 430
+----------
+---------- Right child infeasible ---------- 
+
+---------- Jump ----------
+Current... [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, None]
+Depth... 19
+Bound... 430.15
+Best... 430
+----------
+---------- Right child infeasible ---------- 
+
+---------- Jump ----------
+Current... [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, None, None, None, None, None]
+Depth... 15
+Bound... 430
+Best... 430
+----------
+************************************************************
+Iteration... 32
+Solution... [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, None, None, None, None]
+Queue empty... False
+************************************************************
+Capacity of the sack... 221
+Best feasible solution found: 430 219
+Number of items in the sack... 13
+['6', '18', '9', '2', '4', '13', '17', '3', '19', '16', '12', '11', '14']

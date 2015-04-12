@@ -9,10 +9,12 @@ import sys
 import readsack
 
 
-if __name__ == '__main__':
+def greedy(problem):
+    """Greedy search"""
+
     sortkey = raw_input('Which criterion would you like to use?\n\
                 \rvalue or vpw (value per weight)\n')
-    sack = readsack.readsack(sys.argv[1])
+    sack = readsack.readsack(problem)
     items = sack.pour()
     cap = sack.get_capacity()
 
@@ -21,25 +23,31 @@ if __name__ == '__main__':
         items.sort(key=lambda item: item.value, reverse=True)
     # Sort items by value per weight
     if sortkey.lower() == 'vpw':
-        items.sort(key=lambda item: item.value / item.weight,
-                    reverse=True)
+        items.sort(key=lambda item: float(item.value)/float(item.weight),
+                   reverse=True)
 
     # Begin the greedy search.
-    sum_value = 0
-    sum_weight = 0
-    selected = list()   # keep track of items selected in the sack
+    best_val = 0
+    load = 0
+    solution = []   # keep track of items selected in the sack
 
     for item in items:
-        sum_weight += item.weight
-        if sum_weight > cap:
+        load += item.weight
+        if load > cap:
+            load -= item.weight
             break
         else:
-            sum_value += item.value
-            selected.append(item.name)
-            best_weight = sum_weight
+            best_val += item.value
+            solution.append(item.name)
 
-    # Print the final results.
-    print 'Capacity of sack is', cap
-    print 'Greedy solution (not necessarily optimal):', \
-            sum_value, best_weight
-    print sorted(selected, key=lambda x: int(x))
+    return (cap, best_val, load, solution)
+
+
+if __name__ == '__main__':
+    PROBLEM = sys.argv[1]
+    CAP, VAL, LOAD, SOLUTION = greedy(PROBLEM)
+
+    print 'Capacity of sack...', CAP
+    print 'Greedy solution (not necessarily optimal):', VAL, LOAD
+    print 'Number of items in sack...', len(SOLUTION)
+    print 'Solution...', sorted(SOLUTION, key=lambda x: int(x))

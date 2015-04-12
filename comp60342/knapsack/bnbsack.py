@@ -33,7 +33,8 @@ def frac_bound(items, cap, solution):
             break
 
     if load > cap:
-        bound -= (load - cap) * items[i].value / items[i].weight
+        bound -= \
+            (load - cap) * float(items[i].value) / float(items[i].weight)
 
     return bound
 
@@ -72,7 +73,8 @@ def bnb(sack):
     best_load = 0
     best_solution = []
     items_list = sack.pour()
-    items = tuple(sorted(items_list, key=lambda i: i.value / i.weight,
+    items = tuple(sorted(items_list,
+                         key=lambda i: float(i.value)/float(i.weight),
                          reverse=True))
     cap = sack.get_capacity()
 
@@ -82,11 +84,16 @@ def bnb(sack):
     pqueue.put((-current_bound, current))
     counter = 0
 
-    while not pqueue.empty() and best_val < current_bound:
+    while not pqueue.empty() and best_val < current_bound: 
         counter += 1
         solution = pqueue.get()
         current = solution[1]
         current_bound = -solution[0]
+        # print 'Current...', current
+        # print 'Depth...', current.count(0) + current.count(1)
+        # print 'Bound...', current_bound
+        # print 'Best...', best_val
+        # print '#' * 10
 
         if None in current:       # not a complete solution
             left = current[:]
@@ -104,21 +111,29 @@ def bnb(sack):
                     best_solution = right
                     best_val = val
                     best_load = load
+            # else:
+                # print '-' * 10, 'Right child infeasible', '-' * 10, '\n'
+                # print '-' * 10, 'Jump', '-' * 10
 
-    print 'Iteration...', counter
-    print pqueue.empty()
+    select = [i for i, v in enumerate(best_solution) if v == 1]
+    names = [items[i].name for i in select]
+    names.sort(key=lambda x: int(x))
 
-    return (best_val, best_load, best_solution)
+    # print '*' * 60
+    # print 'Iteration...', counter
+    # print 'Solution...', best_solution
+    # print 'Queue empty...', pqueue.empty()
+    # print '*' * 60
+
+    return (best_val, best_load, names)
 
 
 if __name__ == '__main__':
     SACK = readsack.readsack(sys.argv[1])
     VALS, LOAD, SOLUTION = bnb(SACK)
     ITEMS = SACK.pour()
-    NAMES = [ITEMS[j].name for j, value in enumerate(SOLUTION) if
-             value == 1]
 
     print 'Capacity of the sack...', SACK.get_capacity()
-    print "Best feasible solution found...", VALS, LOAD
-    print 'Number of items...', len(NAMES)
-    print NAMES
+    print 'Best feasible solution found:', VALS, LOAD
+    print 'Number of items in the sack...', len(SOLUTION)
+    print SOLUTION

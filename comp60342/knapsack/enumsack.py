@@ -4,58 +4,57 @@ Task 1b. implement full enumeration of solutions.
 Find the optimal one from all solutions.
 """
 
-import readsack
 import sys
+import readsack
 
 
-if __name__ == '__main__':
-    sack = readsack.readsack(sys.argv[1])
+def enum(problem):
+    """Enumeration of 0/1 Knapsack problem"""
+
+    sack = readsack.readsack(problem)
     items = sack.pour()
-    max_cap = sack.get_capacity()
+    cap = sack.get_capacity()
     space = 2 ** sack.get_num()    # the number of solutions
-    # prefix 'best' indicate the optimal solution so far
-    best_value = 0
-    best_weight = 0
-    best_index = 0
+    best_val = 0
+    best_load = 0
+    best_solution = 0
 
     for i in range(0, space):
         # a N-length bit stream representing a solution
         solution = '{0:b}'.format(i).zfill(20)
         solution = list(solution)
 
-        sum_value = 0
-        sum_weight = 0
-        inf_flag = 0
+        val = 0
+        load = 0
+        infeasible = False
 
-        # Sum up the value and weight in a solution.
-        for j in enumerate(solution):
-            if j[1] == '1':
-                sum_weight += items[j[0]].weight
-                if sum_weight > max_cap:
-                    inf_flag = 1    # infeasible solution
-                    break
-                else:
-                    sum_value += items[j[0]].value
+        # Find the indices of carried items
+        select = [j for j, v in enumerate(solution) if v == '1']
+
+        for j in select:
+            load += items[j].weight
+            if load > cap:
+                infeasible = True
+                break
             else:
-                pass
+                val += items[j].value
 
-        if inf_flag == 0 and sum_value > best_value:
-            best_value = sum_value
-            best_weight = sum_weight
-            best_index = i
+        if not infeasible and val > best_val:
+            best_val = val
+            best_load = load
+            best_solution = solution
 
-    # decomposite the best index to find out indices of items
-    # print 'best index:', best_index
-    # print 'best index in binary:', '{0:b}'.format(best_index)
-    best_indices = list()
-    indices = list(enumerate(list('{0:b}'.format(best_index)),
-                             start=1))
+    select = [i for i, v in enumerate(best_solution) if v == '1']
+    names = [items[i].name for i in select]
 
-    # print indices
-    for index in indices:
-        if index[1] == '1':
-            best_indices.append(items[index[0]].name)
+    return (cap, best_val, best_load, names)
 
-    # Print the final results.
-    print 'Best feasible solution found:', best_value, best_weight
-    print best_indices
+
+if __name__ == '__main__':
+    PROBLEM = sys.argv[1]
+    CAP, VAL, LOAD, SOLUTION = enum(PROBLEM)
+
+    print 'Capacity of sack...', CAP
+    print 'Best feasible solution found:', VAL, LOAD
+    print 'Number of items in the sack...', len(SOLUTION)
+    print 'Solution...', SOLUTION
