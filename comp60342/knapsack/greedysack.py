@@ -35,7 +35,6 @@ def greedy(problem):
         load += item.weight
         if load > cap:
             load -= item.weight
-            break
         else:
             best_val += item.value
             solution.append(item.name)
