@@ -84,8 +84,8 @@ def bnb(sack):
     pqueue.put((-current_bound, current))
     counter = 0
 
-    while not pqueue.empty() and best_val < current_bound and\
-            counter <= 2**30:
+    while not pqueue.empty() and best_val < current_bound\
+            and counter <= 2**20:
         counter += 1
         solution = pqueue.get()
         current = solution[1]
