@@ -10,89 +10,134 @@ import readhospital as reader
 
 
 # A hash table keeping track of the amount of each type of machines
+# For top-down DP
 AMOUNT = dict()
 
+# A table keeping track of the treament
+# For bottom-up DP
+TREATMENT = []
 
-def calvalue(index=None, effect=None, num=0):
-    """Calculate the value of packing 'n' item 'i'.
+
+def treat(item=None, num=0):
+    """Calculate the treatment when buying n item 'i'.
        The unit of value is "persons treated per year per item".
     """
 
-    ids = [1, 2, 3, 4]
-
-    if index not in ids or effect is None or num < 0:
+    if item is None or num < 0:
         print 'Invalid input, please check the input.'
         return
 
-    sumval = 0
-
     if num == 0:
-        sumval = 0
-        return sumval
+        value = 0
+        return value
 
-    if index == 4:     # bed
+    if item.lim == 0:     # bed
         threshold = 100
         if num <= threshold:
-            sumval = effect[0] * num
+            value = item.effect[0] * num
         else:
-            sumval = effect[0] * threshold + effect[1] * (num - threshold)
+            value = item.effect[0] * threshold + \
+                     item.effect[1] * (num - threshold)
     else:
-        try:
-            sumval = sum([effect[i] for i in xrange(num)])
-        except:
-            print 'Cannot buy more than 3 machines.'
+        value = sum([item.effect[i] for i in xrange(min(num, item.lim))])
 
-    return sumval
+    return value
 
 
-def buy(index, budget, items):
+def buy(stage, budget, items):
     """Top-down dp algorithm to find optimal buy plan,
        so as to maximize amount of treatment.
     """
 
     temptab = []
 
-    if index == 0:
-        treat = 0
-    elif index == 4:
-        i = index - 1
-        for n in xrange(int(math.floor(budget / items[i].cost))):
-            temptab.append(calvalue(index, items[i].effect, n) +
-                           buy(index - 1, budget - n * items[i].cost,
-                               items))
-        treat = max(temptab)
-        AMOUNT[(index, budget)] = temptab.index(treat)
+    if stage == 0:
+        values = 0
     else:
-        i = index - 1
-        for n in xrange(min(4, int(math.floor(budget/items[i].cost))+1)):
-            temptab.append(calvalue(index, items[i].effect, n) +
-                           buy(index - 1, budget - n * items[i].cost,
-                               items))
+        i = stage - 1   # align the stage with index of items
+        if items[i].lim == 0:
+            limit = int(math.floor(budget/items[i].cost)) + 1
+        else:
+            limit = items[i].lim + 1
 
-        treat = max(temptab)
-        AMOUNT[(index, budget)] = temptab.index(treat)
+        for n in xrange(
+                min(limit, int(math.floor(budget/items[i].cost))+1)):
+            temptab.append(treat(items[i], n) +
+                           buy(stage-1, budget - n*items[i].cost, items))
 
-    # return treat[(index, budget)]
-    return treat
+        values = max(temptab)
+        # the index in temptab is the amount of item to buy
+        AMOUNT[(stage, budget)] = temptab.index(values)
+
+    return values
+
+
+def buy2(budget, items):
+    """Bottom-up DP algorithm for finding optimal purchase plan,
+       to maximize treatment.
+    """
+
+    # Initialize the treatment table
+    TREATMENT.append([(0, 0)] * (budget+1))
+
+    for i in xrange(len(items)):
+        TREATMENT.append([])
+        if items[i].lim == 0:
+            limit = int(math.floor(budget/items[i].cost)) + 1
+        else:
+            limit = items[i].lim + 1
+
+        for j in xrange(budget + 1):
+            temp = [treat(items[i], n) +
+                    TREATMENT[i][j-n*items[i].cost][1]
+                    for n in xrange(
+                        min(limit, int(math.floor(j/items[i].cost)+1)))
+                    ]
+
+            value = max(temp)
+            # the index in list 'temp' is the number of item to buy
+            num = temp.index(value)
+            TREATMENT[i+1].append((num, value))
+
+
+def backtrack(budget, items, method=None):
+    """Backtrack the number of items to buy."""
+
+    stat = dict()
+    outlay = 0
+
+    if method == '0':   # top-down
+        for i in xrange(len(items), 0, -1):
+            # Find the amount of item i
+            stat[items[i-1].name] = AMOUNT[(i, budget)]
+            budget -= stat[items[i-1].name] * items[i-1].cost
+    elif method == '1':     # bottom-up
+        for i in xrange(len(items), 0, -1):
+            # Find the amount of item i
+            stat[items[i-1].name] = TREATMENT[i][budget][0]
+            budget -= stat[items[i-1].name] * items[i-1].cost
+    else:
+        print 'Invalid argument'
+        return
+
+    for item in items:
+        outlay += item.cost * stat[item.name]
+
+    return (stat, outlay)
 
 
 if __name__ == '__main__':
+    METHOD = raw_input('Please enter method (use the number):\n \
+            \rtop-down (0) or bottom-up (1): ')
     BUDGET, ITEMS = reader.read(sys.argv[1])
-    print 'Total patients...', buy(len(ITEMS), BUDGET, ITEMS)
+    if METHOD == '0':
+        print 'Total patients...', buy(len(ITEMS), BUDGET, ITEMS)
+    elif METHOD == '1':
+        buy2(BUDGET, ITEMS)
+        print 'Total patitens...', TREATMENT[-1][-1][1]
+    else:
+        print 'Invalid input.'
 
-    rsrc = dict()
-    COST = 0
-
-    # Backtrack to find the amount of each type of resources
-    for i in xrange(4, 0, -1):
-        try:
-            bgt -= rsrc[ITEMS[i].name] * ITEMS[i].cost
-        except:
-            bgt = BUDGET
-        rsrc[ITEMS[i-1].name] = AMOUNT[(i, bgt)]
-
-    for ITEM in ITEMS:
-        COST += ITEM.cost * rsrc[ITEM.name]
-
-    print rsrc
-    print 'Total cost...', COST 
+    STAT, OUTLAY = backtrack(BUDGET, ITEMS, METHOD)
+    print 'Plan to buy...\n', STAT
+    print 'Total outlay...', OUTLAY

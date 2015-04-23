@@ -3,13 +3,15 @@
 Read the names, cost and effects of hospital resources from a text file.
 """
 
+import sys
 
 class Item(object):
     """Hospital resources"""
 
-    def __init__(self, name='', cost=0, effect=None):
+    def __init__(self, name='', cost=0, lim=0, effect=None):
         self.name = name
         self.cost = int(cost)
+        self.lim = int(lim)  # limitation of the item
 
         if effect is None:
             self.effect = []
@@ -26,13 +28,15 @@ def read(problem):
 
     with open(problem, 'r') as reader:
         # Read the first line
-        budget = int(reader.readline().rstrip())
+        try:
+            budget = int(reader.readline().rstrip())
+        except ValueError:
+            print 'Invalid budget, should be integer.'
 
         for line in reader:
-            # Use 4 consecutive space as split
-            attrs = line.split('    ')
-            # Format in atts is: name cost effect(list)
-            item = Item(attrs[0], attrs[1], attrs[2:])
+            # Use comma as split
+            attrs = line.split(',')
+            item = Item(attrs[0], attrs[1], attrs[2], attrs[3:])
             items.append(item)
 
     return (budget, items)
