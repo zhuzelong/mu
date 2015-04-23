@@ -140,7 +140,10 @@ def shoot(probs, points, start):
                 reshots.append((aim, stat[i-1][k][1]*prob, k))
 
             # Update the stat table
-            stat[i][0] = max(reshots, key=lambda x: x[1])
+            try:
+                stat[i][0] = max(reshots, key=lambda x: x[1])
+            except ValueError:
+                stat[i][0] = ('Cannot win in one turn', 0, None)
 
         # Re-check after re-computation
         if stat[i][0][1] != 0:
@@ -195,7 +198,7 @@ if __name__ == '__main__':
 
     TAB, POINTS = reader.read(sys.argv[1])
 
-    for start in xrange(2, 171):
+    for start in xrange(1, 171):
         STAT = shoot(TAB, POINTS, start)
         ACTIONS = backtrack(STAT)
         print start, '&', STAT[-1][0][1], '&', ACTIONS
