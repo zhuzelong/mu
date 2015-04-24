@@ -59,9 +59,13 @@ def shotprob(probs, points, gain):
 def shotprob_check(probs, points, gain):
     """The same as shotprob(), but only used for double checking."""
 
-    if gain <= 0 or gain % 2 != 0:
+    if gain < 0 or gain % 2 != 0:
         print 'Invalid gain, check the code.'
         return (None, None)
+
+    if gain == 0:
+        aim = 'Cannot win in one turn'
+        return (aim, 0)
 
     if gain == 50:
         aim = 'bullseye'
@@ -131,7 +135,7 @@ def shoot(probs, points, start):
         if stat[i][0][1] != 0 and 'double' not in stat[i][0][0] \
                 and 'bullseye' not in stat[i][0][0]:
             # Re-compute the probability
-            option = [x for x in xrange(1, 41) if x % 2 == 0] + [50]
+            option = [x for x in xrange(0, 41) if x % 2 == 0] + [50]
             reshots = []
             for k in option:
                 if k > start:
@@ -140,10 +144,7 @@ def shoot(probs, points, start):
                 reshots.append((aim, stat[i-1][k][1]*prob, k))
 
             # Update the stat table
-            try:
-                stat[i][0] = max(reshots, key=lambda x: x[1])
-            except ValueError:
-                stat[i][0] = ('Cannot win in one turn', 0, None)
+            stat[i][0] = max(reshots, key=lambda x: x[1])
 
         # Re-check after re-computation
         if stat[i][0][1] != 0:
