@@ -30,7 +30,7 @@ awk '/Fitness/' rs_runs.txt | awk '{print $1,$5}' > rs_best.txt
 ./mean2 10 11 rs_fit.txt > rs_fit.mean.txt
 ./mean2 10 11 rs_best.txt > rs_best.mean.txt
 
-gnuplot ./plot/plot_rs.plot
+gnuplot plot_rs.plot
 
 echo "============="
 awk '/violations=/' rs_runs.txt | awk '{print $2}' > rs_viols.txt
