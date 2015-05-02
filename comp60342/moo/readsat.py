@@ -24,14 +24,6 @@ class SAT(object):
         self.nvar = nvar
         self.nclause = nclause
 
-        if self.nvar <= 0:
-            print 'Invalid length of variables.'
-            return
-        else:
-            # The element i represent the variable i
-            # The first element (var[0]) is not used
-            self.var = [0] * (nvar + 1)
-
         if clauses is None:
             self.clauses = []
         else:
