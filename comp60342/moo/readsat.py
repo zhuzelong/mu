@@ -5,7 +5,6 @@ Read an instance of 3-SAT problem.
 
 
 import sys
-import math
 
 
 CLAUSES = []
@@ -76,9 +75,9 @@ def evaluate(solution):
     for clause in CLAUSES:
         for lit in clause:
             if lit < 0:
-                literal = -solution[abs(lit)-1]
+                literal = -solution[abs(lit) - 1]
             else:
-                literal = solution[abs(lit)-1]
+                literal = solution[abs(lit) - 1]
 
             if literal == 1:
                 valc += 1
@@ -94,7 +93,7 @@ if __name__ == '__main__':
     CLAUSES = SATT.clauses
     print 'length of clauses...', len(CLAUSES)
     # for CLAUSE in CLAUSES:
-        # print CLAUSE
+    # print CLAUSE
 
     with open(sys.argv[2], 'r') as fh:
         LINE = fh.read()

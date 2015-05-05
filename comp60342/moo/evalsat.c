@@ -117,44 +117,44 @@ void getSAT(char *infile)
   if (fp = fopen(infile, "r"))
     {
       do
-	{
-	  fscanf(fp,"%c", &ch);
-	  if(ch=='c')
-	    do
-	      {
-		ch=fgetc(fp);
-		/* printf("%c", ch); */
-	      }while(ch!='\n');
-	  else if(ch=='p')
-	    {
-		  /* printf("%c", ch); */
-	      break;
-	    }
-	  else
-	    {
-		  /* printf("%c", ch); */
-	      fprintf(stderr,"Arse error in read\n");
-	      exit(-1);
-	    }
-	}while(1);
+    {
+      fscanf(fp,"%c", &ch);
+      if(ch=='c')
+        do
+          {
+        ch=fgetc(fp);
+        printf("%c", ch);
+          }while(ch!='\n');
+      else if(ch=='p')
+        {
+          printf("%c", ch);
+          break;
+        }
+      else
+        {
+          printf("%c", ch);
+          fprintf(stderr,"Arse error in read\n");
+          exit(-1);
+        }
+    }while(1);
       fscanf(fp,"%s", str);
       if(strcmp(str,"cnf")==0)
-	{
-	  fscanf(fp, "%d %d\n", &nvars, &nclauses);
-	  /* fprintf(stderr, "Instance has %d variables and %d clauses.\n", nvars, nclauses); */
-	}
+    {
+      fscanf(fp, "%d %d\n", &nvars, &nclauses);
+      fprintf(stderr, "Instance has %d variables and %d clauses.\n", nvars, nclauses);
+    }
       for(i=0;i<nclauses;i++)
-	{
-	  j=0;
-	  /* printf("%d. ",i+1); */
-	  do
-	    {
-	      getint(fp,&num,GDFALSE);
-	      clause[i][j++]=num;
-		  /* printf("%d ",num); */
-	    }while(num!=0);
-	  /* printf("\n"); */
-	}
+    {
+      j=0;
+      printf("%d. ",i+1);
+      do
+        {
+          getint(fp,&num,GDFALSE);
+          clause[i][j++]=num;
+          printf("%d ",num);
+        }while(num!=0);
+      printf("\n");
+    }
       fclose(fp);
       
     }
@@ -165,16 +165,16 @@ void getSAT(char *infile)
 
 double ran0(long *idum)
 {
-	long k;
-	double ans;
+    long k;
+    double ans;
 
-	*idum ^= MASK;
-	k=(*idum)/IQ;
-	*idum=IA*(*idum-k*IQ)-IR*k;
-	if (*idum < 0) *idum += IM;
-	ans=AM*(*idum);
-	*idum ^= MASK;
-	return ans;
+    *idum ^= MASK;
+    k=(*idum)/IQ;
+    *idum=IA*(*idum-k*IQ)-IR*k;
+    if (*idum < 0) *idum += IM;
+    ans=AM*(*idum);
+    *idum ^= MASK;
+    return ans;
 }
 #undef IA
 #undef IM
@@ -228,17 +228,17 @@ double getdouble(FILE * file, double *valaddr, int stopateol)
       sign = (c == '+') ? +1 : -1;
       c = fgetc(file);
       if (c == EOF)
-	return (0);
+    return (0);
       else if (stopateol && c == '\n')
-	return (-1);
+    return (-1);
     }
     if (c == '.') {
       indecimal = GDTRUE;
       c = fgetc(file);
       if (c == EOF)
-	return (0);
+    return (0);
       else if (stopateol && c == '\n')
-	return (-1);
+    return (-1);
     }
     if (c >= '0' && c <= '9') {
       found = GDTRUE;
@@ -258,12 +258,12 @@ double getdouble(FILE * file, double *valaddr, int stopateol)
       found = GDFALSE;
   // We've run out. If we already saw a decimal point, return now 
       if (indecimal) {
-	if (c != EOF)
-	  ungetc(c, file);
-	*valaddr = sign * n / p;
-	return (1);
+    if (c != EOF)
+      ungetc(c, file);
+    *valaddr = sign * n / p;
+    return (1);
       } else
-	p = 1.0;
+    p = 1.0;
     }
   } while (found);
 
@@ -319,10 +319,10 @@ void getASSIGNMENT(char *infile2)
   if(fp=fopen(infile2, "r"))
     {
       for(i=0;i<nvars;i++)
-	{
-	  getint(fp, &ind[i], GDFALSE);
-	  // printf("%d", ind[i]);
-	}
+    {
+      getint(fp, &ind[i], GDFALSE);
+      // printf("%d", ind[i]);
+    }
       fclose(fp);      
     }
   else
@@ -347,19 +347,19 @@ void evaluateASSIGNMENT()
   for(i=0;i<nvars;i++)
     {
       if((ind[i]!=0)&&(ind[i]!=1))
-	{
-	  fprintf(stderr,"Input was not a valid assignment\n");
-	  exit(-1);
-	}
+    {
+      fprintf(stderr,"Input was not a valid assignment\n");
+      exit(-1);
+    }
       if(ind[i]==0)
-	ind[i]=-1;
+    ind[i]=-1;
       else
-	nvarstrue++;
+    nvarstrue++;
     }
 
 
   // then evaluate it
-  /* printf("Solution evaluates to:\n"); */
+  printf("Solution evaluates to:\n");
 
   ncsat=0;
 
@@ -367,23 +367,23 @@ void evaluateASSIGNMENT()
     {
       i=0;
       do
-	{
-	  cl = clause[c][i];
+    {
+      cl = clause[c][i];
 
-	  if(cl<0)
-	    {
-	      sign=-1;	      
-	    }
-	  else
-	    sign=1;
-	  if(sign *ind[(sign*cl)-1] > 0)
-	    {
-	      ncsat++;
-	      break;
-	    }
-	  i++;
-	}while(cl!=0);
+      if(cl<0)
+        {
+          sign=-1;        
+        }
+      else
+        sign=1;
+      if(sign *ind[(sign*cl)-1] > 0)
+        {
+          ncsat++;
+          break;
+        }
+      i++;
+    }while(cl!=0);
     }
-  printf("%d %d\n", ncsat, nvarstrue);
+  printf("%d %d OBJECTIVE VECTOR\n", ncsat, nvarstrue);
   
 }

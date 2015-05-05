@@ -18,12 +18,16 @@ FRONTCAP = 100  # The max capacity of front
 weight1 = 0     # The weight of objective 1
 weight2 = 0     # The weight of objective 2
 
+new_in_front = 0
+del_from_front = 0
+
 
 def evaluate(solution):
     """Evaluate the number of satisfiable clauses and the number of
        true variables.
 
        params:
+            solution
        solution: a list of variables, 1 = True, -1 = False
     """
 
@@ -36,9 +40,9 @@ def evaluate(solution):
     for clause in clauses:
         for lit in clause:
             if lit < 0:
-                literal = -solution[abs(lit)-1]
+                literal = -solution[abs(lit) - 1]
             else:
-                literal = solution[abs(lit)-1]
+                literal = solution[abs(lit) - 1]
 
             if literal == 1:
                 valc += 1
@@ -69,7 +73,13 @@ def simulate_anneal(seed=None, maxiter=0,
 
     random.seed(seed)
     tpr = tstart    # Initialize temperature
-    alpha = (tstart - tend) / stop  # Decreasing step of temperature
+    # alpha = (tstart - tend) / stop  # Decreasing step of temperature
+    delta = math.pow(tend/tstart, 1.0 / stop)
+
+    replace_dominates_count = 0
+    replace_dominated_count = 0
+    replace_nondominate_count = 0
+    relationship = {'dominates': 0, 'dominated': 0, 'nondominated': 0}
 
     # Initialize a solution
     solution_init = [random.randint(0, 1) for r in xrange(nvars)]
@@ -81,9 +91,8 @@ def simulate_anneal(seed=None, maxiter=0,
     valc, valv = evaluate(solution)
 
     for i in xrange(maxiter):
-        new_solution = solution[:]
         # Mutate the solution
-        new_solution = [-v if random.random() < 1.0/nvars else v
+        new_solution = [-v if random.random() < 1.0 / nvars else v
                         for v in solution]
         new_valc, new_valv = evaluate(new_solution)
 
@@ -91,26 +100,41 @@ def simulate_anneal(seed=None, maxiter=0,
         relation = compare_dominance((valc, valv), (new_valc, new_valv))
 
         if relation == 'dominates':
-            # replace by probability
+            # Replace current solution with probability
+            relationship['dominates'] += 1
             prob = math.exp(min(weight1 * (new_valc - valc),
                                 weight2 * (new_valv - valv)) / tpr)
             if prob > random.random():
                 solution = new_solution
+                valc, valv = new_valc, new_valv
+                replace_dominates_count += 1
         elif relation == 'dominated':
-            solution = new_solution     # replace current solution
+            relationship['dominated'] += 1
+            replace_dominated_count += 1
+            solution = new_solution     # Replace current solution
             valc, valv = new_valc, new_valv
-            front_add(new_valc, new_valv)   # put in approx front
+            front_add(new_valc, new_valv)   # Put in approx front
         else:
-            # replace by probablity based on 'Rule C'
-            prob = min(1, math.exp(
-                           max(weight1 * (valc - new_valc),
-                               weight2 * (valv - new_valv)) / tpr))
+            relationship['nondominated'] += 1
+            # Replace by probablity based on 'Rule C'
+            prob = math.exp(-max(weight1 * (valc - new_valc),
+                                 weight2 * (valv - new_valv)) / tpr)
             if prob > random.random():
                 solution = new_solution
-            front_add(new_valc, new_valv)   # put in approx front
+                valc, valv = new_valc, new_valv
+                replace_nondominate_count += 1
+            front_add(new_valc, new_valv)   # Put in approx front
 
         if i < stop:
-            tpr -= alpha    # Linear cooling schedule
+            # tpr -= alpha    # Linear cooling schedule
+            tpr *= delta
+
+    print 'dominates sub...{0}, dominated sub...{1}, nondominate sub...{2}'.\
+        format(replace_dominates_count, replace_dominated_count,
+               replace_nondominate_count)
+    print 'Relation...\n', relationship
+    print 'Prob...', prob
+    print 'temperature...', tpr
 
 
 def compare_dominance(values1, values2):
@@ -136,6 +160,9 @@ def front_add(valc, valv):
     """
 
     global front, FRONTCAP, weight1, weight2, nvars, nclauses
+    global new_in_front, del_from_front
+    to_remove = []
+
     if len(front) == 0:
         front.append((valc, valv))
         return
@@ -143,17 +170,22 @@ def front_add(valc, valv):
     for point in front:
         relation = compare_dominance(point, (valc, valv))
         if relation == 'dominates':
-            return      # point V dominates X, do not add X
+            return      # Point V dominates X, do not add X
         elif relation == 'dominated':
-            front = filter(lambda p: p != point, front)  # delete point
+            to_remove.append(point)
         else:           # nondominated
             continue
 
     # X pass the test, i.e. non dominated by any points in front, add X
     front.append((valc, valv))
+    new_in_front += 1
+
+    for point in to_remove:
+        front.remove(point)
 
     if len(front) > FRONTCAP:
-        values = [weight1*point[0]/nclauses + weight2*point[1]/nvars
+        del_from_front += 1
+        values = [weight1 * point[0] / nclauses + weight2 * point[1] / nvars
                   for point in front]
         # Delete the point with lowest weighted objectives
         front.pop(values.index(min(values)))
@@ -176,3 +208,5 @@ if __name__ == '__main__':
 
     for point in front:
         print point
+
+    print 'add...{0}, delete...{1}'.format(new_in_front, del_from_front)
