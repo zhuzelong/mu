@@ -1,4 +1,4 @@
-"""Week 3 Lab Task 2
+"""Week 3 Lab Task 2.
 
 Given a probability table and the remaining point, figure out the optimal
 strategy to win the game (end at 0 point), find the maximal probability.
@@ -10,10 +10,11 @@ import readdarts as reader
 
 
 def shotprob(probs, points, gain):
-    """Given a score and a probability table, find the max probability
-       to get the score at one shot.
-    """
+    """Calculate probability.
 
+    Given a score and a probability table, find the max probability,
+    to get the score at one shot.
+    """
     if not isinstance(gain, int) or gain < 0:
         print 'Invalid input, please enter a positive integer'
         return (None, None)
@@ -58,7 +59,6 @@ def shotprob(probs, points, gain):
 
 def shotprob_check(probs, points, gain):
     """The same as shotprob(), but only used for double checking."""
-
     if gain < 0 or gain % 2 != 0:
         print 'Invalid gain, check the code.'
         return (None, None)
@@ -78,10 +78,10 @@ def shotprob_check(probs, points, gain):
 
 
 def shotprob_aux(probs, *args):
-    """Auxiliary function of shotprob()
-       Find the max probability and the corresponding aim.
-    """
+    """Auxiliary function of shotprob().
 
+    Find the max probability and the corresponding aim.
+    """
     if len(args) % 2 != 0 or len(args) == 0:
         print 'Invalid arguments, check the code.'
         return (None, None)
@@ -109,26 +109,26 @@ def shotprob_aux(probs, *args):
 
 def shoot(probs, points, start):
     """Calculate the maximal probability to win at start of score.
-       The last shot has to be double, double20 or bullseye.
-    """
 
+    The last shot has to be double, double20 or bullseye.
+    """
     # Initialize the first row. The tuple comprises:
     # 1. aim at the current stage
     # 2. the largest probability to reach S score after the i-th shot
     # 3. the gain in the previous stage
     stat = []
-    stat.append([(None, 0, 0)] * (start+1))
+    stat.append([(None, 0, 0)] * (start + 1))
     stat[0][-1] = (None, 1, 0)
 
     num = 3     # the number of darts available in a turn
 
-    for i in xrange(1, num+1):
+    for i in xrange(1, num + 1):
         stat.append([])
         for j in xrange(start + 1):
             shots = []
             for k in xrange(j, start + 1):  # the current starting score
-                aim, prob = shotprob(probs, points, k-j)
-                shots.append((aim, stat[i-1][k][1] * prob, k-j))
+                aim, prob = shotprob(probs, points, k - j)
+                shots.append((aim, stat[i - 1][k][1] * prob, k - j))
             bestshot = max(shots, key=lambda x: x[1])
             stat[i].append(bestshot)
 
@@ -141,7 +141,7 @@ def shoot(probs, points, start):
                 if k > start:
                     break
                 aim, prob = shotprob_check(probs, points, k)
-                reshots.append((aim, stat[i-1][k][1]*prob, k))
+                reshots.append((aim, stat[i - 1][k][1] * prob, k))
 
             # Update the stat table
             stat[i][0] = max(reshots, key=lambda x: x[1])
@@ -155,12 +155,11 @@ def shoot(probs, points, start):
 
 def backtrack(stat):
     """Backtrack all the aims including points."""
-
     actions = []
     j = 0   # index of column
 
     # Find the stage of winning
-    for end in xrange(len(stat)-1, -1, -1):
+    for end in xrange(len(stat) - 1, -1, -1):
         if stat[end][0][1] != 0:
             break
     if end == 0:    # Cannot win in a turn

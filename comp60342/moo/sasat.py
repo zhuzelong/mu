@@ -1,4 +1,4 @@
-"""Week 5 Lab 4
+"""Week 5 Lab 4.
 
 Implement simulated annealing algorithm to solve MAX-SAT-ONE problem.
 """
@@ -23,14 +23,7 @@ del_from_front = 0
 
 
 def evaluate(solution):
-    """Evaluate the number of satisfiable clauses and the number of
-       true variables.
-
-       params:
-            solution
-       solution: a list of variables, 1 = True, -1 = False
-    """
-
+    """Evaluate the number of satisfiable clauses and true variables."""
     global clauses
     # Evaluate the variables
     valv = sum([i for i in solution if i == 1])
@@ -53,18 +46,7 @@ def evaluate(solution):
 
 def simulate_anneal(seed=None, maxiter=0,
                     tstart=None, tend=None, stop=0):
-    """Implementation of simulated annealing
-
-       params:
-            maxiter: the max number of iterations for SA
-            tstart: starting temperature
-            tend: ending temperature
-            stop: the number of iterations for cooling temperature
-
-       Output:
-            100 lines of non-dominated Pareto front
-    """
-
+    """Implementation of simulated annealing."""
     global nvars, nclauses, weight1, weight2
     # Initialize the random function
     if seed is None:
@@ -73,8 +55,8 @@ def simulate_anneal(seed=None, maxiter=0,
 
     random.seed(seed)
     tpr = tstart    # Initialize temperature
-    # alpha = (tstart - tend) / stop  # Decreasing step of temperature
-    delta = math.pow(tend/tstart, 1.0 / stop)
+    # alpha = (tstart - tend) / stop  # Linear cooling
+    delta = math.pow(tend / tstart, 1.0 / stop)  # Exponential cooling
 
     replace_dominates_count = 0
     replace_dominated_count = 0
@@ -127,7 +109,7 @@ def simulate_anneal(seed=None, maxiter=0,
 
         if i < stop:
             # tpr -= alpha    # Linear cooling schedule
-            tpr *= delta
+            tpr *= delta      # Exponential cooling schedule
 
     print 'dominates sub...{0}, dominated sub...{1}, nondominate sub...{2}'.\
         format(replace_dominates_count, replace_dominated_count,
@@ -139,7 +121,6 @@ def simulate_anneal(seed=None, maxiter=0,
 
 def compare_dominance(values1, values2):
     """Compare two pairs of values based on dominance relation."""
-
     diff1 = values1[0] - values2[0]     # The difference of 1st objective
     diff2 = values1[1] - values2[1]     # The difference of 2nd objective
 
@@ -154,11 +135,11 @@ def compare_dominance(values1, values2):
 
 
 def front_add(valc, valv):
-    """Determine to put a 2D point X in the Pareto front
-       step1. add X to front if no points in front dominated X
-       step2. remove all points dominated by X
-    """
+    """Determine to put a 2D point X in the Pareto front.
 
+    step1. add X to front if no points in front dominated X
+    step2. remove all points dominated by X
+    """
     global front, FRONTCAP, weight1, weight2, nvars, nclauses
     global new_in_front, del_from_front
     to_remove = []
@@ -191,6 +172,21 @@ def front_add(valc, valv):
         front.pop(values.index(min(values)))
 
 
+def runsa(path, seed, tstart, tend, stop):
+    """Run SA."""
+    global weight1, weight2, clauses, nvars, nclauses, front
+    if len(front) > 0:
+        front = []
+    sat = readsat.read(path)
+    clauses = sat.clauses
+    nvars = sat.nvar
+    nclauses = sat.nclause
+    weight1 = 0.5
+    weight2 = 0.5
+    simulate_anneal(seed, 500000, tstart, tend, stop)
+    return front
+
+
 if __name__ == '__main__':
     sat = readsat.read(sys.argv[1])
     clauses = sat.clauses
@@ -210,3 +206,7 @@ if __name__ == '__main__':
         print point
 
     print 'add...{0}, delete...{1}'.format(new_in_front, del_from_front)
+    # path = raw_input('Done, enter file to save the result: ')
+    # with open(path, 'w') as fh:
+    #     for point in front:
+    #         fh.write('{0} {1}\n'.format(point[0], point[1]))

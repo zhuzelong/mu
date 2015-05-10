@@ -1,4 +1,4 @@
-"""Week 5 Lab 4
+"""Week 5 Lab 4.
 
 Read an instance of 3-SAT problem.
 """
@@ -11,15 +11,15 @@ CLAUSES = []
 
 
 class SAT(object):
+
     """An instance of 3-SAT problem."""
 
     def __init__(self, nvar=0, nclause=0, clauses=None):
         """nvar: the number of variables
-           nclause: the number of clauses
-           var: variables, represented by integers
-           clauses: 3-literal clauses
+        nclause: the number of clauses
+        var: variables, represented by integers
+        clauses: 3-literal clauses
         """
-
         self.nvar = nvar
         self.nclause = nclause
 
@@ -30,7 +30,6 @@ class SAT(object):
 
     def add_clause(self, clause=None):
         """Append a clause to the clause list."""
-
         if clause is None:
             print 'No clause provided, please check the input.'
             return
@@ -44,7 +43,6 @@ class SAT(object):
 
 def read(path):
     """Read an instance of 3-SAT problem."""
-
     with open(path, 'r') as reader:
         for line in reader:
             content = line.split()
@@ -59,13 +57,11 @@ def read(path):
 
 
 def evaluate(solution):
-    """Evaluate the number of satisfiable clauses and the number of
-       true variables.
+    """Evaluate the number of satisfiable clauses and true variables.
 
-       params:
-       solution: a list of variables, 1 = True, -1 = False
+    params:
+    solution: a list of variables, 1 = True, -1 = False
     """
-
     # Evaluate the variables
     valv = sum([i for i in solution if i == 1])
 
