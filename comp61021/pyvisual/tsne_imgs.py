@@ -7,7 +7,7 @@ from sklearn.manifold import TSNE
 data = sio.loadmat('/Users/Zack/Documents/code/Matlab/comp61021/data/Image/dimgs.mat')
 imgs = data['dimgs']
 
-# Apply tSNE to images. 
+# Apply tSNE to images.
 # Use default paramters: n_dims=2, perplexity=30, early_exaggeration=4, 
 # learning_rate=1000, n_iteration=1000
 model = TSNE()
